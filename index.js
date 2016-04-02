@@ -1,6 +1,8 @@
 'use strict';
 
 const express = require('express')
+const https = require('https')
+const fs = require('fs')
 
 const app = express()
 
@@ -25,6 +27,9 @@ app.get('/api/interested/:classid', (req, res) => {
         res.json({ count: 0 })
 })
 
-app.listen(3000, () => {
-    console.log('listening on http://localhost:3000')
+https.createServer({
+    key: fs.readFileSync(process.env.KEYPATH + '/privkey.pem'),
+    cert: fs.readFileSync(process.env.KEYPATH + '/cert.pem')
+}, app).listen(3000, () => {
+    console.log('listening on https://localhost:3000')
 })
