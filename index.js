@@ -6,6 +6,10 @@ const app = express()
 
 let interested = {}
 
+app.get('/api/interested', (req, res) => {
+    res.json(interested)
+})
+
 app.post('/api/interested/:classid/:user', (req, res) => {
     const { classid, user } = req.params
     interested[classid] = interested[classid] || []
