@@ -31,7 +31,8 @@ app.post('/api/interested/:user', (req, res) => {
     }
 
     const { classes } = req.body
-    for (const c of classes) {
+    for (let i=0; i<classes.length; ++i) {
+        const c = classes[i]
         interested[c] = interested[c] || [];
         interested[c].push(user)
     }
