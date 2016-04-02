@@ -7,6 +7,11 @@ const fs = require('fs')
 const app = express()
 app.use(require('body-parser').json())
 
+Array.prototype.remove = function(item) {
+    const i = this.indexOf(item)
+    return this.splice(i, 1)
+};
+
 let interested = {}
 
 app.use(function(req, res, next) {
@@ -21,6 +26,10 @@ app.get('/api/interested', (req, res) => {
 
 app.post('/api/interested/:user', (req, res) => {
     const { user } = req.params
+    for (let i=0; i<interested.length; ++i) {
+        interested[i] = interested[i].remove(user)
+    }
+
     const { classes } = req.body
     for (const c of classes) {
         interested[c] = interested[c] || [];
