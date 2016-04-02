@@ -5,7 +5,7 @@ const https = require('https')
 const fs = require('fs')
 
 const app = express()
-app.use(require('body-parser').json())
+app.use(require('body-parser').urlencoded())
 
 let interested = {}
 
