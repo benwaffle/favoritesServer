@@ -5,6 +5,7 @@ const https = require('https')
 const fs = require('fs')
 
 const app = express()
+app.use(require('body-parser').json())
 
 let interested = {}
 
@@ -18,10 +19,13 @@ app.get('/api/interested', (req, res) => {
     res.json(interested)
 })
 
-app.post('/api/interested/:classid/:user', (req, res) => {
-    const { classid, user } = req.params
-    interested[classid] = interested[classid] || []
-    interested[classid].push(user)
+app.post('/api/interested/:user', (req, res) => {
+    const { user } = req.params
+    const { classes } = req.body
+    for (const c of classes) {
+        interested[c] = interested[c] || [];
+        interested[c].push(user)
+    }
     res.send('ok')
 })
 
